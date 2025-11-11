@@ -1,0 +1,12 @@
+<h2>Symptom Logger</h2>
+<form (ngSubmit)="onSubmit()">
+  <div>
+    <label for="patientId">Patient ID:</label>
+    <input type="text" id="patientId" [(ngModel)]="patientId" name="patientId" required>
+  </div>
+  <div>
+    <label for="liveTranscript">Live Transcript:</label>
+    <textarea id="liveTranscript" [(ngModel)]="liveTranscript" name="liveTranscript" required></textarea>
+  </div>
+  <button type="submit">Log Symptom</button>
+</form>

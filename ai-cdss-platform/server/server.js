@@ -3,6 +3,7 @@ const express = require('express');
 const mysql = require('mysql2');
 
 const app = express();
+app.use(express.json());
 const port = process.env.PORT || 3000;
 
 const db = mysql.createConnection({
@@ -63,6 +64,23 @@ app.get('/api/patient/:patientId', (req, res) => {
     };
 
     res.json(patientData);
+  });
+});
+
+app.post('/api/call/symptoms', (req, res) => {
+  const { patientId, liveTranscript, doctorId } = req.body;
+
+  if (!patientId || !liveTranscript || !doctorId) {
+    return res.status(400).send('Missing required fields');
+  }
+
+  const query = 'INSERT INTO CallRecord (patient_id, transcription_text, doctor_id, timestamp) VALUES (?, ?, ?, NOW())';
+  db.query(query, [patientId, liveTranscript, doctorId], (err, results) => {
+    if (err) {
+      console.error('Error inserting into the database:', err);
+      return res.status(500).send('Server error');
+    }
+    res.status(201).send({ message: 'Symptom logged successfully', callId: results.insertId });
   });
 });
 

@@ -1,16 +1,15 @@
-import { Component, signal } from '@angular/core';
-import { RouterOutlet } from '@angular/router';
+import { Component } from '@angular/core';
+import { RouterLink, RouterOutlet } from '@angular/router';
 
 @Component({
   selector: 'app-root',
-  imports: [RouterOutlet],
+  standalone: true,
+  imports: [RouterOutlet, RouterLink],
   template: `
-    <h1>Welcome to {{ title() }}!</h1>
-
-    <router-outlet />
+    <a routerLink="/diagnosis">Diagnosis Screen</a>
+    <router-outlet></router-outlet>
   `,
-  styles: [],
+  styles: []
 })
 export class App {
-  protected readonly title = signal('client');
 }
